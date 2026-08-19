@@ -1,17 +1,17 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         n = len(nums)
-        prefix = 1
-        suffix = 1
-        result = nums[0]
-        for i in range(n):
-            if prefix == 0:
-                prefix = 1
-            elif suffix == 0:
-                suffix = 1
-            prefix *= nums[i]
-            suffix *= nums[n-i-1]
+        min_product = max_product = result = nums[0]
 
-            result = max(result, max(prefix, suffix))
+        for i in range(1, n):
+            num = nums[i]
+            if num < 0:
+                min_product, max_product = max_product, min_product
+            
+            min_product = min(num, min_product*num)
+            max_product = max(num, max_product*num)
+
+            result = max(result, max_product)
         
         return result
+        
