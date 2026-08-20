@@ -1,20 +1,14 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        result = []
+        n = len(candidates)
+        dp = [[] for _ in range(target+1)]
+        dp[0] = [[]]
+        if n == 0:
+            return []
 
-        def recursive(curr_sum, index, temp_arr):
-            if curr_sum == target:
-                result.append(temp_arr.copy())
-                return
-            if index >= len(candidates) or curr_sum > target:
-                return
-            
-            temp_arr.append(candidates[index])
-            recursive(curr_sum + candidates[index], index, temp_arr)
+        for num in candidates:
+            for curr_sum in range(num, target+1):
+                for temp_arr in dp[curr_sum - num]:
+                    dp[curr_sum].append(temp_arr + [num])
 
-            temp_arr.pop()
-            recursive(curr_sum, index + 1, temp_arr)
-
-        recursive(0, 0, [])
-
-        return result
+        return dp[target]
