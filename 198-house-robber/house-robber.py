@@ -1,17 +1,13 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        # skip idx-l and idx+1
-        memo ={}
+        # skip  idx+1
+        n = len(nums)
+        dp = [0] * (n+2)
 
-        def recursive(index):
-            if index >= len(nums):
-                return 0
-            if index in memo:
-                return memo[index]
-            take = nums[index] + recursive(index+2)
-            skip = recursive(index+1)
+        for i in range(n-1, -1, -1):
+            take = nums[i] + dp[i+2]
+            skip = dp[i+1]
 
-            memo[index] = max(take, skip)
-            return memo[index]
+            dp[i] = max(take, skip)
         
-        return recursive(0)
+        return dp[0]
