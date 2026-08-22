@@ -3,24 +3,17 @@ class Solution:
         """
         Do not return anything, modify nums1 in-place instead.
         """
-        i = 0
-        j = 0
-        res = []
+        curr_pointer = m+n-1
+        pointer1 = m-1
+        pointer2 = n-1
 
-        while i < m and j < n:
-            if nums1[i] <= nums2[j]:
-                res.append(nums1[i])
-                i += 1
+        while pointer2 >= 0:
+            if pointer1 >= 0 and nums1[pointer1] > nums2[pointer2]:
+                nums1[curr_pointer] = nums1[pointer1]
+                pointer1 -= 1
+                
             else:
-                res.append(nums2[j])
-                j += 1
-            print(res)
-        while i < m:
-            res.append(nums1[i])
-            i += 1
-        while j < n:
-            res.append(nums2[j])
-            j += 1
-        print(res)
-        for k in range(m+n):
-            nums1[k] = res[k]
+                nums1[curr_pointer] = nums2[pointer2]
+                pointer2 -= 1
+            
+            curr_pointer -= 1
