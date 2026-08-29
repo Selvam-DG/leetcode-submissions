@@ -1,18 +1,24 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         n = len(s)
-        freq = dict()
+        char_freq = [0] * 26
+        window_start = 0
         max_freq = 0
         longest = 0
-        l = 0
-        for r in range(n):
-            char = s[r]
-            freq[char] = 1 + freq.get(char, 0)
-            max_freq = max(max_freq, freq[char])
-            while  (r-l+1) - max_freq > k:
-                freq[s[l]] -= 1
-                l +=1
-            print(freq)
-            longest = max(longest, r-l+1)
+
+        for i in range(n):
+            char = s[i]
+            index = ord(char) - ord('A')
+            char_freq[index] += 1
+
+            max_freq = max(max_freq, char_freq[index])
+
+
+            while (i - window_start + 1) - max_freq > k:
+                idx = ord(s[window_start])-ord('A')
+                char_freq[idx] -= 1
+                window_start += 1
+            
+            longest = max(longest, i-window_start+1)
         
         return longest
