@@ -1,21 +1,17 @@
 class Solution:
     def firstStableIndex(self, nums: list[int], k: int) -> int:
         n = len(nums)
-        max_ele = nums[0]
-        max_pref = [0]* n
-        for i, num in enumerate(nums):
-            max_ele = max(max_ele, num)
-            max_pref[i] = max_ele
-        
-        min_suffix = [0]*n
-        min_ele = nums[n-1]
+        global_max = nums[0]
+        res_idx = 0
+        ans_max = nums[0]
 
-        for i in range(n-1, -1, -1):
-            min_ele = min(min_ele, nums[i])
-            min_suffix[i] = min_ele
-        
         for i in range(n):
-            if max_pref[i] - min_suffix[i] <= k:
-                return i
+            global_max = max(global_max, nums[i])
+            if i == res_idx:
+                ans_max = max(ans_max, nums[i])
+            
+            if nums[i] < ans_max-k:
+                res_idx = i+1
+                ans_max = global_max
         
-        return -1
+        return res_idx if res_idx < n else -1
