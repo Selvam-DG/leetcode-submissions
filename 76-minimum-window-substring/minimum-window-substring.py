@@ -1,34 +1,33 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-
-        
-        need_count = dict()
+        freq_t = dict()
         for char in t:
-            need_count[char] = 1 + need_count.get(char, 0)
-        window_count = dict()
-        required = len(need_count)
-        formed = 0
-        left = 0
+            freq_t[char] = 1 + freq_t.get(char,0)
+        n = len(s)
+        curr_freq = dict()
         best_length = -1
         best_start = 0
+        l=0
+        formed = 0
+        for r in range(n):
+            char = s[r]
+            curr_freq [char] = 1 + curr_freq.get(char, 0)
 
-        for right in range(len(s)):
-            char = s[right]
-            window_count[char] = 1 + window_count.get(char, 0)
-            if char in need_count and window_count[char] == need_count[char]:
+            if char in freq_t and freq_t[char] == curr_freq[char]:
                 formed += 1
-
-            while formed == required:
-                if (best_length == -1) or (right-left+1)< best_length:
-                    best_length = right - left + 1
-                    best_start = left
-                lchar = s[left]
-                window_count[lchar] -= 1
-                if lchar in need_count and window_count[lchar] < need_count[lchar]:
-                    formed -= 1
-                left += 1
+            
+            while formed == len(freq_t):
+                if best_length == -1 or (r-l+1) < best_length:
+                    best_length = r-l+1
+                    best_start = l
                 
+                lchar = s[l]
+                curr_freq[lchar] -= 1
+                if lchar in freq_t and curr_freq[lchar] < freq_t[lchar]:
+                    formed -= 1
+                l += 1
+        
         if best_length == -1:
             return ""
         return s[best_start: best_start+best_length]
-        
+
