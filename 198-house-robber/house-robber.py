@@ -1,19 +1,11 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         n = len(nums)
-        memo = {}
-        def solve(idx):
-            if idx >= n:
-                return 0
-            if idx in memo:
-                return memo[idx]
+        dp = [0] * (n+2)
 
-            # skip
-            skip = solve(idx+1)
+        # 1 , 3, 3, 4
 
-            # take
-            take = nums[idx] + solve(idx+2)
-            memo[idx] = max(skip, take)
-            return max(skip, take)
+        for i in  range(n-1, -1, -1):
+            dp[i] = max(dp[i+1], nums[i]+ dp[i+2])
         
-        return solve(0)
+        return dp[0]
