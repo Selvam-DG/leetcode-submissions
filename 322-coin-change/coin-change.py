@@ -1,27 +1,12 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        memo = {}
-        INF  = float('inf')
+        INF = float('inf')
 
-        def solve(idx, remaining):
-            if remaining == 0:
-                return 0
-            if idx < 0 or remaining < 0:
-                return INF
-            
-            if (idx, remaining) in memo:
-                return memo[(idx, remaining)]
-            
-            take = INF
+        dp = [0] + [INF]*amount
 
-            if coins[idx] <= remaining:
-                take = 1 +  solve(idx, remaining-coins[idx])
-            
-            skip = solve(idx-1, remaining)
-
-            memo[(idx, remaining)] = min(take, skip)
-
-            return memo[(idx, remaining)]
+        for a in range(1, amount+1):
+            for coin in coins:
+                if coin <= a:
+                    dp[a] = min(dp[a], dp[a-coin]+1)
         
-        ans = solve(len(coins)-1, amount)
-        return -1 if ans == INF else ans
+        return -1 if dp[amount] ==INF else dp[amount]
