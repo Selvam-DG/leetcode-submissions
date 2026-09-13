@@ -1,24 +1,24 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
         n = len(chars)
-
         read = 0
         write = 0
 
         while read < n:
-            char = chars[read]
+            current = chars[read]
             count = 0
-
-            while read < n and char == chars[read]:
+            while read < n and chars[read] == current:
                 read += 1
                 count += 1
             
-            chars[write] = char
+            chars[write] = current
+
             write += 1
 
             if count > 1:
                 for digit in str(count):
                     chars[write] = digit
                     write += 1
-        
+            
         return write
+            
