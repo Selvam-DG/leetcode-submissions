@@ -1,18 +1,10 @@
 class Solution:
     def change(self, amount: int, coins: List[int]) -> int:
-        n = len(coins)
-        memo = {}
-        def solve(idx, remaining):
-            if  remaining == 0:
-                return 1
-            if idx ==n or remaining < 0:
-                return 0
-            if (idx, remaining) in memo:
-                return memo[(idx, remaining)]
-            
-            take = solve(idx, remaining-coins[idx])
-            skip = solve(idx+1, remaining)
-            memo[(idx, remaining)] = take + skip
-            return memo[(idx, remaining)]
+        dp = [1] + [0] * amount
+
+        for coin in coins:
+           for a in range(coin, amount+1):
+            dp[a] += dp[a-coin]
         
-        return solve(0, amount)
+        return dp[amount]
+        
