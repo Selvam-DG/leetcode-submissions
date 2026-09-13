@@ -1,8 +1,8 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        n = len(chars)
         read = 0
         write = 0
+        n = len(chars)
 
         while read < n:
             current = chars[read]
@@ -12,13 +12,12 @@ class Solution:
                 count += 1
             
             chars[write] = current
-
             write += 1
 
             if count > 1:
                 for digit in str(count):
                     chars[write] = digit
                     write += 1
-            
+        
         return write
             
