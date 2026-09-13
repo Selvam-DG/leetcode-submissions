@@ -1,11 +1,17 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         n = len(nums)
-        dp = [0] * (n+2)
-
-        # 1 , 3, 3, 4
-
-        for i in  range(n-1, -1, -1):
-            dp[i] = max(dp[i+1], nums[i]+ dp[i+2])
+        if n == 1:
+            return nums[0]
+        if n == 2:
+            return max(nums)
         
-        return dp[0]
+        prev1 = 0
+        prev2 = 0
+
+        for i in range(n):
+            curr = max(nums[i] + prev2, prev1)
+            prev2 = prev1
+            prev1 =  curr
+        
+        return prev1
