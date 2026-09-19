@@ -1,23 +1,16 @@
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
-        # only 2 baskets
-        # no limit on amount of fruit in each basket
-        #
-        basket = dict()
         n = len(fruits)
-        window_start = 0
-
-        max_fruit = 0
-
-        for window_end in range(n):
-            basket[fruits[window_end]] = 1 + basket.get(fruits[window_end], 0)
-
+        basket = dict()
+        max_fruits = 0
+        l = 0
+        for r in range(n):
+            basket[fruits[r]] = 1 + basket.get(fruits[r], 0)
             while len(basket) > 2:
-                basket[fruits[window_start]] -= 1
-                if basket[fruits[window_start]] == 0:
-                    del basket[fruits[window_start]]
-                window_start += 1
-            max_fruit = max(max_fruit, window_end-window_start+1)
+                basket[fruits[l]] -= 1
+                if basket[fruits[l]] == 0:
+                    del basket[fruits[l]]
+                l += 1
+            max_fruits = max(max_fruits, r-l+1)
         
-        return max_fruit
-                 
+        return max_fruits
