@@ -3,24 +3,25 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        def swap(arr, i,j):
-            arr[i], arr[j] = arr[j], arr[i]
-            return arr
-        def reverse(arr, a, b):
-            while a < b:
-                arr[a], arr[b] =arr[b], arr[a]
-                a += 1
-                b -= 1
-            return arr
+        def swap(i, j):
+            nums[i], nums[j] = nums[j], nums[i]
+
+        def reverse(start, end):
+            while start < end:
+                nums[start], nums[end] = nums[end], nums[start]
+                start += 1
+                end -= 1
+
         n = len(nums)
         i = n-2
+
         while i >= 0 and nums[i] >= nums[i+1]:
             i -= 1
+        print(i)
         if i >= 0:
             j = n-1
             while nums[j] <= nums[i]:
                 j -= 1
-            nums = swap(nums, i, j)
+            swap(i, j)
         
-        nums = reverse(nums, i+1, n-1)
-        
+        reverse(i+1,n-1)
