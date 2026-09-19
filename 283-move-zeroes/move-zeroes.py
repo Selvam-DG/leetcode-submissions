@@ -3,14 +3,15 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
+        non_zero_pointer = 0
+
         n = len(nums)
-        l = 0
-        
         for r in range(n):
             if nums[r] != 0:
-                nums[l] = nums[r]
-                l += 1
+                nums[non_zero_pointer] = nums[r]
+                non_zero_pointer += 1
         
-        for i in range(l, n):
+        for i in range(non_zero_pointer, n):
             nums[i] = 0
-            
+        
+    
