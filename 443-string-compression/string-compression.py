@@ -1,17 +1,18 @@
 class Solution:
     def compress(self, chars: List[str]) -> int:
+        n = len(chars)
         read = 0
         write = 0
-        n = len(chars)
 
         while read < n:
-            current = chars[read]
-            count = 0
-            while read < n and chars[read] == current:
+            char = chars[read]
+            read += 1
+            count = 1
+            while read < n and chars[read] == char:
                 read += 1
                 count += 1
             
-            chars[write] = current
+            chars[write] = char
             write += 1
 
             if count > 1:
@@ -20,4 +21,3 @@ class Solution:
                     write += 1
         
         return write
-            
