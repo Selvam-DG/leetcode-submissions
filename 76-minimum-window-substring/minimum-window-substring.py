@@ -1,35 +1,36 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        freq_t = dict()
-
+        n = len(s)
+        count_t = dict()
         for char in t:
-            freq_t[char] = 1 + freq_t.get(char, 0)
+            count_t[char] = 1 + count_t.get(char, 0)
         
-        needed = len(freq_t)
-        
-        freq_s = dict()
-        actual = 0
-        start_idx = 0
-        best_length = 0
-        l = 0
+        need = len(count_t)
+        curr_count = dict()
+        left = 0
+        matched = 0
+        best_length = -1
+        best_start = 0
 
-        for r in range(len(s)):
-            char = s[r]
-            freq_s[char] = 1 + freq_s.get(char, 0)
-            if char in freq_t and freq_s[char] == freq_t[char]:
-                actual += 1
+        for right in range(n):
+            char = s[right]
+            curr_count[char] = 1 + curr_count.get(char, 0)
+            if char in count_t and curr_count[char] == count_t[char]:
+                matched += 1
             
-            while needed == actual:
-                if best_length == 0 or (r-l+1) < best_length:
-                    start_idx = l
-                    best_length = r-l+1
+            while matched == need:
+                leave_char = s[left]
+                if best_length == -1 or (right-left+1) < best_length:
+                    best_length = right-left+1
+                    best_start = left
+                curr_count[leave_char] -= 1
+                if leave_char in count_t and curr_count[leave_char] < count_t[leave_char]:
+                    matched -= 1
+                left += 1
+        if best_length == -1:
+            return ""
+        return s[best_start:best_start+best_length]
 
-                leaving_char = s[l]
-                freq_s[leaving_char] -= 1
-                if leaving_char in freq_t and freq_s[leaving_char] < freq_t[leaving_char]:
-                    actual -= 1
-                
-                l += 1
-        
-        return s[start_idx: start_idx+best_length]
                     
+                
+
