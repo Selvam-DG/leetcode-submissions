@@ -3,15 +3,18 @@ class Solution:
         max_area = 0
         n = len(height)
 
-        l = 0
-        r = n-1
+        left = 0
+        right = n-1
 
-        while l < r:
-            area = min(height[l], height[r]) * (r-l)
-            max_area = max(max_area, area)
-            if height[l]< height[r]:
-                l +=1
+        while left < right:
+            h = min(height[left], height[right])
+            max_area = max(max_area, h * (right-left))
+
+            if height[left] <= height[right]:
+                left += 1
             else:
-                r -= 1
+                right -= 1
         
         return max_area
+
+        
