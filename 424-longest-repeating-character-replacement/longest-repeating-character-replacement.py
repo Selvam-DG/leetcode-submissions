@@ -1,16 +1,17 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         n = len(s)
-        freq = dict()
+        count = dict()
         max_freq = 0
-        l = 0
-        longest = 0
-        for r in range(n):
-            freq[s[r]] = 1 + freq.get(s[r], 0)
-            max_freq = max(max_freq, freq[s[r]])
-
-            while (r-l+1) - max_freq > k:
-                freq[s[l]] -=1
-                l += 1
-            longest = max(longest, r-l+1)
-        return longest
+        result = 0
+        left = 0
+        for right in range(n):
+            char = s[right]
+            count[char] = 1 + count.get(char, 0)
+            max_freq  = max(max_freq, count[char])
+            while (right -left+1) - max_freq > k:
+                count[s[left]] -= 1
+                left += 1
+            result = max(result, right-left+1)
+        
+        return result
