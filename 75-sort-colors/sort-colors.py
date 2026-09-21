@@ -1,21 +1,21 @@
 class Solution:
-    def sortColors(self, nums: List[int]) -> None:
+    def sortColors(self, nums: list[int]) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
         n = len(nums)
-        low = 0
-        mid = 0
-        high = n-1
+        red = 0
+        white = 0
+        blue = n-1
 
-        while mid <= high:
-            if nums[mid] == 0:
-                nums[low], nums[mid] = nums[mid], nums[low]
-                low += 1
-                mid += 1
-            elif nums[mid] == 1:
-                mid += 1
+        while white <= blue:
+            if nums[white] == 0:
+                nums[red], nums[white] = nums[white], nums[red]
+                red += 1
+                white += 1
+            elif nums[white] == 1:
+                white += 1
             else:
-                nums[mid], nums[high] = nums[high], nums[mid]
-                high -= 1
-                
+                nums[white], nums[blue] = nums[blue], nums[white]
+                blue -= 1
+            
