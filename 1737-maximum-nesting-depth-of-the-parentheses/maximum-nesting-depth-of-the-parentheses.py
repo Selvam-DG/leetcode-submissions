@@ -6,9 +6,7 @@ class Solution:
         for i,ch in enumerate(s):
             if ch == '(':
                 curr += 1
-                stack.append(ch)
             elif ch == ')':
-                stack.pop()
                 curr -= 1
             ans = max(ans, curr)
         
