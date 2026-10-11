@@ -1,36 +1,32 @@
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         n = len(s)
-        count_t = dict()
-        for char in t:
-            count_t[char] = 1 + count_t.get(char, 0)
-        
-        need = len(count_t)
-        curr_count = dict()
-        left = 0
-        matched = 0
-        best_length = -1
-        best_start = 0
-
-        for right in range(n):
-            char = s[right]
-            curr_count[char] = 1 + curr_count.get(char, 0)
-            if char in count_t and curr_count[char] == count_t[char]:
-                matched += 1
-            
-            while matched == need:
-                leave_char = s[left]
-                if best_length == -1 or (right-left+1) < best_length:
-                    best_length = right-left+1
-                    best_start = left
-                curr_count[leave_char] -= 1
-                if leave_char in count_t and curr_count[leave_char] < count_t[leave_char]:
-                    matched -= 1
-                left += 1
-        if best_length == -1:
+        if len(s) < len(t):
             return ""
-        return s[best_start:best_start+best_length]
+        need = dict()
+        for char in t:
+            need[char] = 1 + need.get(char, 0)
+        required = len(need)
 
-                    
-                
+
+        window = dict()
+        formed =0 
+        start = 0
+        best_start = 0
+        min_best_length = float('inf')
+        for end in range(len(s)):
+            window[s[end]] = 1 + window.get(s[end], 0)
+            if s[end] in need and window[s[end]] == need[s[end]]:
+                formed += 1
+            
+            while formed == required:
+                if (end-start+1 < min_best_length):
+                    best_start = start
+                    min_best_length = end-start+1
+                leaving_char = s[start]
+                window[leaving_char] -= 1
+                if leaving_char in need and window[leaving_char] < need[leaving_char]:
+                    formed -= 1
+                start += 1
+        return "" if min_best_length == float('inf') else s[best_start:best_start+ min_best_length]
 
